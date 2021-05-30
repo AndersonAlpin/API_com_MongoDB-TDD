@@ -8,15 +8,11 @@ describe('Cadastro de usuário', () => {
     let email = `${time}@email.com`
     let user = { name: "Anderson", email, password: "12345" }
 
-    return request
-      .post("/user")
+    return request.post("/user")
       .send(user)
       .then(res => {
         expect(res.statusCode).toEqual(200);
         expect(res.body.email).toEqual(email);
       })
-      .catch(err => {
-        fail(err);
-      });
   })
 });
