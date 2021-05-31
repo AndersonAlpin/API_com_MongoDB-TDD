@@ -2,11 +2,13 @@ const User = require('../models/User')
 
 class UserController {
 
-    async index(req, res) {
-        res.json({})
-    }
-
     async create(req, res) {
+
+        if(req.body.name == "" || req.body.email == "" || req.body.password == ""){
+            res.sendStatus(400);
+            return;
+        }
+
         try {
             let newUser = new User({
                 name: req.body.name,
