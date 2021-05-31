@@ -1,4 +1,5 @@
-const User = require('../models/User')
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 class UserController {
 
@@ -18,10 +19,14 @@ class UserController {
                 return;
             }
 
+            let password = req.body.password;
+            let salt = await bcrypt.genSalt(10);
+            let hash = await bcrypt.hash(password, salt);
+
             let newUser = new User({
                 name: req.body.name,
                 email: req.body.email,
-                password: req.body.password
+                password: hash
             });
 
             await newUser.save();
