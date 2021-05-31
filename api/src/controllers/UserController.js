@@ -35,6 +35,11 @@ class UserController {
             res.sendStatus(500);
         }
     }
+
+    async delete(req, res) {
+        await User.deleteOne({ "email": req.params.email });
+        res.sendStatus(200);
+    }
 }
 
 module.exports = new UserController();
