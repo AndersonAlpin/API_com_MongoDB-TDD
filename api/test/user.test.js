@@ -76,4 +76,22 @@ describe("Autenticação", () => {
         expect(res.body.token).toBeDefined();
       })
   })
-})
+
+  test("Deve impedir que um usuário não cadastro se logue", () => {
+    return request.post("/auth")
+      .send({ email: 'mainUser.email', password: 'mainUser.password' })
+      .then(res => {
+        expect(res.statusCode).toEqual(403);
+        expect(res.body.errors.email).toEqual("Email não cadastrado.");
+      })
+  })
+
+  test("Deve impedir que um usuário se logue com uma senha incorreta", () => {
+    return request.post("/auth")
+      .send({ email: mainUser.email, password: 'mainUser.password' })
+      .then(res => {
+        expect(res.statusCode).toEqual(403);
+        expect(res.body.errors.senha).toEqual("Senha incorreta.");
+      })
+  })
+});
