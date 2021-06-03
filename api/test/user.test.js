@@ -62,7 +62,6 @@ describe('Cadastro de usuário', () => {
             expect(res.statusCode).toEqual(400);
             expect(res.body.error).toEqual("Email já cadastrado.");
           });
-
       });
   });
 });
@@ -91,7 +90,7 @@ describe("Autenticação", () => {
       .send({ email: mainUser.email, password: 'mainUser.password' })
       .then(res => {
         expect(res.statusCode).toEqual(403);
-        expect(res.body.errors.senha).toEqual("Senha incorreta.");
+        expect(res.body.errors.password).toEqual("Senha incorreta.");
       })
   })
 });

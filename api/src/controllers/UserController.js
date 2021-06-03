@@ -17,7 +17,7 @@ class UserController {
 
 			if (user != undefined) {
 				res.statusCode = 400;
-				res.json({ error: "Email já cadastrado." })
+				res.json({ error: "Email já cadastrado." });
 				return;
 			}
 
@@ -40,12 +40,29 @@ class UserController {
 
 	async auth(req, res) {
 		let { email, password } = req.body;
-		jwt.sign({ email }, JWTSecret, { expiresIn: '48h' }, (err, token) => {
+
+		let user = await User.findOne({ email });
+
+		if (user == undefined) {
+			res.statusCode = 403;
+			res.json({ errors: { email: "Email não cadastrado." } });
+			return;
+		}
+
+		let isPasswordRight = await bcrypt.compare(password, user.password);
+
+		if (!isPasswordRight) {
+			res.statusCode = 403;
+			res.json({ errors: { password: "Senha incorreta." } });
+			return;
+		}
+
+		jwt.sign({ email, name: user.name, id: user._id }, JWTSecret, { expiresIn: '48h' }, (err, token) => {
 			if (err) {
 				res.sendStatus(500);
 				console.log(err);
 			} else {
-				res.json({ token })
+				res.json({ token });
 			}
 		})
 	}
