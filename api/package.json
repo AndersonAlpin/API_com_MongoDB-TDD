@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "pm2 start index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/jest": "^26.0.23",
     "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jest": "^27.0.2",
     "jsonwebtoken": "^8.5.1",
