@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.json({});
+  res.json({ok: "tudo ok"});
 });
 
 app.use("/", router);
